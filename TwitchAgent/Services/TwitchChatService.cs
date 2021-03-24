@@ -14,8 +14,9 @@ using TwitchLib.Client.Events;
 using TwitchLib.Client.Models;
 using TwitchLib.Communication.Clients;
 using TwitchLib.Communication.Models;
+using System.Text.RegularExpressions;
 
-namespace TwitchAgent
+namespace TwitchAgent.Services
 {
     public class TwitchChatService
     {
@@ -64,6 +65,25 @@ namespace TwitchAgent
 
         private async void TwitchClient_OnMessageReceived(object sender, OnMessageReceivedArgs e)
         {
+            var userMessage = e.ChatMessage.Message;
+            var hexValue = "";
+
+           if(Regex.IsMatch(userMessage, "^!hex #([a-f0-9]{6}|[a-f0-9]{3})$", RegexOptions.IgnoreCase))
+            {
+                try
+                {
+                    hexValue = userMessage.Substring(6);
+
+                    var colourName = await ColourService.GetColourFromHex(hexValue);
+                    _client.SendMessage("LuceCarter", $"The closest colour to #{hexValue} is {colourName}");
+                   
+
+                } catch
+                    {
+                        Console.WriteLine("Unable to parse Hex Value");
+                    }
+            }
+
             await _connection.InvokeAsync("SendMessage", $"{e.ChatMessage.DisplayName}", $"{e.ChatMessage.Message}");
         }
 

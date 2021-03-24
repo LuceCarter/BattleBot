@@ -1,11 +1,19 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
 
+body {
+    margin-top: 10%;
+}
+
 #messagesList {   
     width: 100%;
     margin: 1rem 0 .5rem 0;
     padding-right: .25rem;
     font-size: 1.5rem;
+}
+
+.container {
+    position: relative;
 }
 
 .messageContainer {
@@ -15,12 +23,15 @@ for details on configuring this project to bundle and minify static web assets. 
     right: 0;
     bottom: 30%;   
     width: 395px;
-    float: right;    
+    float: right;
+    overflow-y: hidden;
+    margin-right: 0.75rem;
 }
 
 .message {
     background-color: #0f2745;
     color: #ffa03a;
+    box-shadow: 5px 5px 5px #000;
     margin: 0 0 .5rem 0;
     padding-left: 1rem;
     padding-right: .25rem;
